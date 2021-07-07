@@ -1,72 +1,98 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel"
-          target="_blank"
-          rel="noopener"
-        >babel</a>
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint"
-          target="_blank"
-          rel="noopener"
-        >eslint</a>
-      </li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li>
-        <a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a>
-      </li>
-      <li>
-        <a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a>
-      </li>
-      <li>
-        <a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a>
-      </li>
-      <li>
-        <a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a>
-      </li>
-      <li>
-        <a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a>
-      </li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li>
-        <a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a>
-      </li>
-      <li>
-        <a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a>
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-devtools#vue-devtools"
-          target="_blank"
-          rel="noopener"
-        >vue-devtools</a>
-      </li>
-      <li>
-        <a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a>
-      </li>
-      <li>
-        <a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a>
-      </li>
-    </ul>
+  <div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Info</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">1</th>
+          <td>Mark</td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-sm btn-info"
+              @click.prevent="
+                openModal(
+                  'https://file-examples-com.github.io/uploads/2017/10/file-sample_150kB.pdf'
+                )
+              "
+            >
+              Check PDF
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">2</th>
+          <td>Jacob</td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-sm btn-info"
+              @click.prevent="
+                openModal(
+                  'https://file-examples-com.github.io/uploads/2017/10/file-example_PDF_500_kB.pdf'
+                )
+              "
+            >
+              Check PDF
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">3</th>
+          <td>Larry</td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-sm btn-info"
+              @click.prevent="
+                openModal(
+                  'https://file-examples-com.github.io/uploads/2017/10/file-example_PDF_1MB.pdf'
+                )
+              "
+            >
+              Check PDF
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <modal-pdf-reader
+      :modalOpen="this.openModalReader"
+      :urlDownload="this.pdfLink"
+      @close="closeModal()"
+    ></modal-pdf-reader>
   </div>
 </template>
 
 <script>
+import ModalPDFReader from "./ModalPDFReader.vue";
 export default {
   name: "HelloWorld",
-  props: {
-    msg: String
-  }
+  data() {
+    return {
+      openModalReader: false,
+      pdfLink: "",
+    };
+  },
+  methods: {
+    openModal(pdfLink) {
+      this.pdfLink = pdfLink;
+      this.openModalReader = !this.openModalReader;
+    },
+    closeModal() {
+      this.openModalReader = !this.openModalReader;
+      this.pdfLink = "";
+    },
+  },
+  components: {
+    "modal-pdf-reader": ModalPDFReader,
+  },
 };
 </script>
 
